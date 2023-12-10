@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G-Code Review</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">G-Code Files</h1>
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th>File Name</th>
+                    <th>Processed</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in files_info %}
+                    <tr>
+                        <td>{{ file.name }}</td>
+                        <td>
+                            {% if file.processed %}
+                                <span class="badge badge-success">Yes</span>
+                            {% else %}
+                                <span class="badge badge-secondary">No</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('file_info', filename=file.name) }}" class="btn btn-primary btn-sm">View</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    <a href="{{ url_for('upload_file') }}" class="btn btn-success mt-3">Upload New File</a>
+    <a href="{{ url_for('generate_views') }}" class="btn btn-success mt-3">Run Pre-Processing</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Information</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">File Information</h1>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ file.name }}</h5>
+                <p class="card-text">Size: {{ file.size }} bytes</p>
+                <p class="card-text">Last Modified: {{ file.modified_date }}</p>
+                {% if image_exists %}
+                {{image_filename}}
+                <img src="{{ url_for('static', filename='/' + image_filename) }}" alt="G-code Preview">
+                {% else %}
+                    <p>No preview available.</p>
+                {% endif %}
+                <p><a href="{{ url_for('index') }}" class="btn btn-primary">Back to list</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

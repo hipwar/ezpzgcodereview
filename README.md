@@ -1,7 +1,7 @@
-# gcodereview
+# ezpzgcodereview
 
 ## Overview
-`gcodereview` is a Flask-based web app for managing and reviewing G-code files, useful for 3D printing.
+`ezpzgcodereview` is a Flask-based web app for managing and reviewing G-code files, useful for 3D printing.
 
 ## Features
 - File Listing and Details
@@ -15,7 +15,7 @@
 - Flask
 
 ### Setup
-1. Clone the repo: `git clone https://github.com/yourusername/gcodereview.git`
+1. Clone the repo: `git clone https://github.com/hipwar/ezpzgcodereview.git`
 2. Install dependencies: `pip install -r requirements.txt`
 3. Run the app: `flask run`
 

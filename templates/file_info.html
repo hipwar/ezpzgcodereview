@@ -15,12 +15,15 @@
                 <p class="card-text">Size: {{ file.size }} bytes</p>
                 <p class="card-text">Last Modified: {{ file.modified_date }}</p>
                 {% if image_exists %}
-                {{image_filename}}
-                <img src="{{ url_for('static', filename='/' + image_filename) }}" alt="G-code Preview">
+                    <img src="{{ url_for('static', filename=image_filename) }}" alt="G-code Preview">
                 {% else %}
                     <p>No preview available.</p>
                 {% endif %}
-                <p><a href="{{ url_for('index') }}" class="btn btn-primary">Back to list</a></p>
+                <div class="mt-3">
+                    <a href="{{ url_for('accept_gcode', filename=file.name) }}" class="btn btn-success">Accept</a>
+                    <a href="{{ url_for('reject_gcode', filename=file.name) }}" class="btn btn-danger">Reject</a>
+                </div>
+                <a href="{{ url_for('index') }}" class="btn btn-primary mt-3">Back to list</a>
             </div>
         </div>
     </div>

@@ -28,13 +28,12 @@ def index():
             files_info.append({'name': file, 'processed': is_processed})
     return render_template('index.html', files_info=files_info)
 
-def calculate_delay(file_path, base_delay=10, additional_delay_per_mb=1):
+def calculate_delay(file_path, base_delay=3, additional_delay_per_mb=1):
     file_size_mb = os.path.getsize(file_path) / (1024 * 1024)  # Convert bytes to megabytes
     total_delay = base_delay + (file_size_mb * additional_delay_per_mb)
     return total_delay
 
 #risky addition here
-
 
 @app.route('/generate_views')
 def generate_views():
@@ -47,14 +46,23 @@ def generate_views():
             # Launch PrusaSlicer with the G-code file
             subprocess.Popen([prusa_slicer_path, file_path])
             delay = calculate_delay(file_path)
+            print('Sleep for ' + str(delay) + 'seconds...\n ')
             time.sleep(delay)
-
+            print('Sleep done, press \'l\' and take a screenshot.\n')
             # Take a screenshot
-            pyautogui.hotkey('l')
+            # Get the screen size
+            screenWidth, screenHeight = pyautogui.size()
+            # Calculate the center of the screen
+            centerX, centerY = screenWidth / 1.2, screenHeight / 2
+            # Move the mouse to the center and click
+            pyautogui.click(centerX, centerY)
+            time.sleep(2)
+            pyautogui.press('l')
             time.sleep(2)
             screenshot = pyautogui.screenshot()
             screenshot.save(os.path.splitext(file_path)[0] + '-image1.jpg')
-
+            time.sleep(2)
+            pyautogui.hotkey('ctrl', 'q')
             # Close PrusaSlicer
             # pyautogui.hotkey('alt', 'f4')
             subprocess.Popen(['pkill', 'PrusaSlicer'])
@@ -72,7 +80,16 @@ def file_info(filename):
         'modified_date': datetime.fromtimestamp(file_stats.st_mtime)
     }
     image_filename = os.path.splitext(file_path)[0] + '-image1.jpg'
-    image_exists = os.path.exists(image_filename)
+    #image_source_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
+    image_source_path = image_filename
+    image_dest_path = os.path.join('static', image_filename)
+    image_exists = False
+
+    print('Check if ' + image_filename + ' exists\n')
+    if os.path.exists(image_filename):
+        print('Image does exist. Copy it from ' + image_source_path + ' to' + image_dest_path + '\n')
+        shutil.copy(image_source_path, image_dest_path)
+        image_exists = True
 
     return render_template('file_info.html', file=file_details, image_filename=image_filename, image_exists=image_exists)
     #return render_template('file_info.html', file=file_details)

@@ -33,8 +33,6 @@ def calculate_delay(file_path, base_delay=3, additional_delay_per_mb=1):
     total_delay = base_delay + (file_size_mb * additional_delay_per_mb)
     return total_delay
 
-#risky addition here
-
 @app.route('/generate_views')
 def generate_views():
     prusa_slicer_path = '/home/egr/gcodereview/PrusaSlicer-2.7.0+linux-x64-GTK3-202311231454.AppImage'  # Update with your path
@@ -59,7 +57,14 @@ def generate_views():
             time.sleep(2)
             pyautogui.press('l')
             time.sleep(2)
-            screenshot = pyautogui.screenshot()
+            regionWidth = int(screenWidth * 2 / 3)
+            regionHeight = int(screenHeight * 2 / 3)
+            startX = int((screenWidth - regionWidth) / 2)
+            startY = int((screenHeight - regionHeight) / 2)
+
+            # Take a screenshot of the specified region
+            screenshot = pyautogui.screenshot(region=(startX, startY, regionWidth, regionHeight))
+            #screenshot = pyautogui.screenshot()
             screenshot.save(os.path.splitext(file_path)[0] + '-image1.jpg')
             time.sleep(2)
             pyautogui.hotkey('ctrl', 'q')

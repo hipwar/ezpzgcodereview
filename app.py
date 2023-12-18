@@ -61,11 +61,12 @@ def generate_views():
             regionHeight = int(screenHeight * 2 / 3)
             startX = int((screenWidth - regionWidth) / 2)
             startY = int((screenHeight - regionHeight) / 2)
-
             # Take a screenshot of the specified region
             screenshot = pyautogui.screenshot(region=(startX, startY, regionWidth, regionHeight))
             #screenshot = pyautogui.screenshot()
             screenshot.save(os.path.splitext(file_path)[0] + '-image1.jpg')
+            #todo: rotate with pyautogui.press('1') etc to get different views and save as image2.jpg etc.
+            #save and store multiple images for each gcode for more effective review
             time.sleep(2)
             pyautogui.hotkey('ctrl', 'q')
             # Close PrusaSlicer

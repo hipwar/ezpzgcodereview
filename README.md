@@ -17,7 +17,7 @@
 ### Setup
 1. Clone the repo: `git clone https://github.com/hipwar/ezpzgcodereview.git`
 2. Install dependencies: `pip install -r requirements.txt`
-3. Run the app: `flask run`
+3. Run the app: `python3 app.py`
 
 ## Usage
 Access the app at `http://localhost:5000`. View and preprocess G-code files.
